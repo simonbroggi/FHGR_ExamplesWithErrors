@@ -15,8 +15,6 @@ public class Player : MonoBehaviour
 
 	private CharacterController characterController;
 
-	Vector2 eyeAngles;
-
 	void Awake()
 	{
 		characterController = GetComponent<CharacterController>();
@@ -35,15 +33,6 @@ public class Player : MonoBehaviour
 		Move();
 	}
 
-	public void StartNewGame(Vector3 position)
-	{
-		eyeAngles.x = Random.Range(0f, 360f);
-		eyeAngles.y = startingVerticalEyeAngle;
-		characterController.enabled = false;
-		transform.localPosition = position;
-		characterController.enabled = true;
-	}
-
 	public Vector3 Move()
 	{
 		UpdatePosition();
@@ -59,13 +48,14 @@ public class Player : MonoBehaviour
 
 		var movement = playerInput.ReadValue<Vector2>();
 
-		// Debug.Log(string.Format("Movement: {0}\n", movement));
+		// Normalize diagonal movement
+		float sqrMagnitude = movement.sqrMagnitude;
+		if (sqrMagnitude > 1f)
+		{
+			movement /= Mathf.Sqrt(sqrMagnitude);
+		}
 
-		// float sqrMagnitude = movement.sqrMagnitude;
-		// if (sqrMagnitude > 1f)
-		// {
-		// 	movement /= Mathf.Sqrt(sqrMagnitude);
-		// }
+		// Apply movement speed
 		movement *= movementSpeed;
 
 		// var forward = new Vector2(
@@ -75,8 +65,8 @@ public class Player : MonoBehaviour
 
 		// camera relative movement
 		Vector3 forward3D = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;
-		Vector2 forward = new Vector2(forward3D.x, forward3D.z);
-		Vector2 right = new Vector2(forward.y, -forward.x);
+		Vector2 forward = new(forward3D.x, forward3D.z);
+		Vector2 right = new(forward.y, -forward.x);
 		
 		movement = right * movement.x + forward * movement.y;
 		characterController.SimpleMove(new Vector3(movement.x, 0f, movement.y));
