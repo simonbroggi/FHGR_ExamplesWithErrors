@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Menue : MonoBehaviour
 {
-    public Canvas canvas;
+    public GameObject goToShow;
     public void ShowIt()
     {
-        canvas.gameObject.SetActive(true);
+        goToShow.SetActive(true);
     }
 }

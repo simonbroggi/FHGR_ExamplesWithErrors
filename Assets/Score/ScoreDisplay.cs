@@ -25,7 +25,7 @@ public class ScoreDisplay : MonoBehaviour
     }
 
     [ContextMenu("Add 1000 Points")]
-    void Add1000Points()
+    public void Add1000Points()
     {
         score += 1000;
     }
