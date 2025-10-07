@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreDisplay
   score: 0
-  speed: 5000
+  speed: 1000
 --- !u!114 &827933093
 MonoBehaviour:
   m_ObjectHideFlags: 0
